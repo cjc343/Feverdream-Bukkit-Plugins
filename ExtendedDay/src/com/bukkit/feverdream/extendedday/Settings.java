@@ -83,9 +83,9 @@ public class Settings {
                 dayLength = 1;
             }
 
-            String tmp = props.getProperty(config_value_start_day , config_value_start_day_default_str).toLowerCase();
+            String tmp = props.getProperty(config_value_start_day , config_value_start_day_default_str).toLowerCase().trim();
             
-            if( tmp == "day") {
+            if( tmp == config_value_start_day_default_str) { // day
                 dayStart = 0;
             }else if( tmp == "sunset") {
                 dayStart = 12000;
@@ -94,7 +94,11 @@ public class Settings {
             }else if( tmp == "sunrise") {
                 dayStart = 22200;
             }else {
-                dayStart = (int)Long.parseLong(tmp);
+                try {
+                    dayStart = Integer.parseInt(tmp);
+                }catch(NumberFormatException nfe) {
+                    dayStart = 0;
+                }
             }
             
             return true;
