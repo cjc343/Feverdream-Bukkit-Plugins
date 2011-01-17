@@ -76,13 +76,13 @@ public class Settings {
 
             String tmp = props.getProperty(config_value_start_day , config_value_start_day_default_str).trim().toLowerCase();
             
-            if( tmp == "day") {
+            if( tmp.equalsIgnoreCase("day")) {
                 dayStart = 0;
-            }else if( tmp == "sunset") {
+            }else if( tmp.equalsIgnoreCase("sunset")) {
                 dayStart = 12000;
-            }else if( tmp == "night") {
+            }else if( tmp.equalsIgnoreCase("night")) {
                 dayStart = 13800;
-            }else if( tmp == "sunrise") {
+            }else if( tmp.equalsIgnoreCase("sunrise")) {
                 dayStart = 22200;
             }else {
                 dayStart = 0;

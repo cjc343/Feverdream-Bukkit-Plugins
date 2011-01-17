@@ -16,7 +16,7 @@ class SunShine extends TimerTask {
         long time = server.getTime();
         long relativeTime = time % 24000;
         long startOfDay = time - relativeTime;
-		// Day lasts 13000, so half that is Noon.
+		// Day lasts 13000 ticks, so half that is Noon.
         // There are 20 ticks per real-life second,
         // making the day/night cycle 1200 seconds (or 20 minutes) long.
         // and 24000 ticks per Minecraft day

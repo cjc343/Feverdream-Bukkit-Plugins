@@ -27,10 +27,11 @@ public class Settings {
     public static String config_file = "extendday.settings";
     public static String config_comment = "Extend Day Control Configuration File.";
     public static String config_value_day_length= "daylight-days-long";
+    public static int config_value_day_length_default = 1;
+
     public static String config_value_start_day  = "start-time";
     public static int config_value_start_day_default= 0;
     public static String config_value_start_day_default_str= "day";
-    public static int config_value_day_length_default = 1;
     
     public int dayLength = config_value_day_length_default;;
     public int dayStart = config_value_start_day_default;;
@@ -85,13 +86,13 @@ public class Settings {
 
             String tmp = props.getProperty(config_value_start_day , config_value_start_day_default_str).toLowerCase().trim();
             
-            if( tmp == config_value_start_day_default_str) { // day
+            if( tmp.equalsIgnoreCase(config_value_start_day_default_str)) { // day
                 dayStart = 0;
-            }else if( tmp == "sunset") {
+            }else if( tmp.equalsIgnoreCase("sunset")) {
                 dayStart = 12000;
-            }else if( tmp == "night") {
+            }else if( tmp.equalsIgnoreCase("night")) {
                 dayStart = 13800;
-            }else if( tmp == "sunrise") {
+            }else if( tmp.equalsIgnoreCase("sunrise")) {
                 dayStart = 22200;
             }else {
                 try {

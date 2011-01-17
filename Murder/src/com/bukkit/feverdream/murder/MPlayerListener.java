@@ -103,7 +103,8 @@ public class MPlayerListener extends PlayerListener {
 				 }
 			 }else{
 				 player.sendMessage("You are not licensed to kill.");
-			 }			
+			 }
+			 // event.setCancelled(true);
 		}
 	}
 }
