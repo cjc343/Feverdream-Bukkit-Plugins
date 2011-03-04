@@ -1,4 +1,5 @@
-package com.bukkit.feverdream.extendedday;
+//this file was modified by cjc on feb 28
+package cjcfork.feverdream.extendedday;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

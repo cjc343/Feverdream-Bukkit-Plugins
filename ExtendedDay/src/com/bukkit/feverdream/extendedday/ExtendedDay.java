@@ -1,21 +1,26 @@
 //This file is GNU AGPL Version 3 or higher. - Feverdream
-package com.bukkit.feverdream.extendedday;
+//this file was modified by cjc on feb 6
+//this file was modified by cjc on feb 7
+//this file was modified by cjc on feb 10
+//this file was modified by cjc on feb 28
+package cjcfork.feverdream.extendedday;
 
-import java.io.File;
+//import java.io.File;
 import java.util.Timer;
 import org.bukkit.Server;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
+//import org.bukkit.plugin.PluginDescriptionFile;
+//import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.TimerTask;
 
 class SunShine extends TimerTask {
 	public Server server = null;
-	public static int daysLeft = 1;
+	//no longer public
+	public int daysLeft = -1;
 	public Settings settings;
 
 	public void run() {
-        long time = server.getTime();
+        long time = server.getWorlds().get(0).getTime();
         long relativeTime = time % 24000;
         long startOfDay = time - relativeTime;
 		// Day lasts 13000 ticks, so half that is Noon.
@@ -34,15 +39,23 @@ class SunShine extends TimerTask {
         // Sunrise 90 seconds or 1800 ticks. SetTime Operations during sunrise create massive lag. Don't do it.
         //
         // Time can be set into 40 different 30 second slots.
-        
+
         if( relativeTime == 0 || (relativeTime > 0 && relativeTime <= 12000)){
-            // Day
+   
+			// Day
+        	
+         	//added by cjc, feb 7
+        	//no longer needed feb 10?
+//			if (daysLeft == -1) {
+//				daysLeft = this.settings.dayLength;
+//			}
+
         	// Do nothing.
         	// server.setTime(startOfDay);
         }else if(relativeTime > 12000 && relativeTime <= 13800){
         	// sunset
         	if(daysLeft-- > 1){
-        		server.setTime(startOfDay);
+        		server.getWorlds().get(0).setTime(startOfDay);
         	}
         }else if(relativeTime > 13800 && relativeTime <= 22200){
         	// nights
@@ -62,24 +75,24 @@ public class ExtendedDay extends JavaPlugin {
 	private String name;
 	private String version;	
 
-	public ExtendedDay(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin,  ClassLoader cLoader) {
-        super(pluginLoader, instance, desc, folder, plugin, cLoader);
-		
-        name = "ExtendDay";
-    	version = "v1.0 By Feverdream";
-	}
+
 
 	public void onEnable() {
-		System.out.println(name + " " + version + " initialized.");
+		 name = "ExtendFork";
+	    version = "a fork of ExtendDay by feverdream";
+		System.out.println(name + " " + version + " initialized. This is a DEV build by cjc for QQ bukkit unk. recent standard for other plugins.");
 		SunShine ss = new SunShine();
 		ss.server = getServer();
 		ss.settings = new Settings();
 		if( ss.settings.loadSettings()){
-	        long time = ss.server.getTime();
+	        long time = ss.server.getWorlds().get(0).getTime();
 	        
 	        // Set day start from configuration.
-	        ss.server.setTime( (time - (time % 24000)) + ss.settings.dayStart);
+	        ss.server.getWorlds().get(0).setTime( (time - (time % 24000)) + ss.settings.dayStart);
 
+	        //cjc more efficient setting test feb 10
+	        ss.daysLeft = ss.settings.dayLength;
+	        
 			tick = new Timer();
 			tick.schedule(ss, 0, rate);
 		}else{
